@@ -5,7 +5,7 @@ export class RigidBody {
 		this.shape = shape;   
 		this.velocity = new Vec(0, 0);
 
-		this.angularVelocity = 10000000;
+		this.angularVelocity = 100000000000000000000000;
 	}	
 
 	updateShape(dt) {
@@ -13,6 +13,8 @@ export class RigidBody {
 		this.shape.position.add(ds);
 
 		this.shape.orientation += this.angularVelocity * dt;
+
+		//update verticies and aabb of shape if it is rectagle
     } 
 
 }
