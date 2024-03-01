@@ -11,9 +11,13 @@ export class Renderer {
         for (let i = 0; i<objects.length; i++) {
             const shape = objects[i].shape;
             shape.draw(this.ctx, fillCol, bordCol);
-            //draw verticies and aabb
             shape.aabb.draw(this.ctx, "red")
             //draw verticies
+            if (shape instanceof Rect) {
+                shape.vertices.forEach(vertex => {
+                    vertex.drawPoint(this.ctx, "black");
+                });
+            }
         } 
     }
 
