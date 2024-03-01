@@ -15,6 +15,12 @@ export class RigidBody {
 		this.shape.orientation += this.angularVelocity * dt;
 
 		//update verticies and aabb of shape if it is rectagle
+		if (this.shape instanceof Rect) {
+				this.shape.updateVerticies();
+				this.shape.updateAabb();
+		}
+		//ubdate aabb
+		this.shape.updateAabb();
     } 
 
 }

@@ -9,8 +9,11 @@ export class Renderer {
     
     drawFrame(objects, fillCol, bordCol) {
         for (let i = 0; i<objects.length; i++) {
-            objects[i].shape.draw(this.ctx, fillCol, bordCol);
+            const shape = objects[i].shape;
+            shape.draw(this.ctx, fillCol, bordCol);
             //draw verticies and aabb
+            shape.aabb.draw(this.ctx, "red")
+            //draw verticies
         } 
     }
 
