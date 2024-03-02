@@ -1,4 +1,4 @@
-export class Rect {
+export class Aabb {
 	constructor(min, max) {
 		this.min = max;
         this.max = min;

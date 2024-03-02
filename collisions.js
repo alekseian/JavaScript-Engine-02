@@ -12,7 +12,7 @@ export class Collisions {
     }
 
     broadPhazeDetection (objects) {
-        for(let i=0; i<objects.length; j++){
+        for(let i=0; i<objects.length; i++){
             for(let j=i+1; j<objects.length; j++){
                 this.detectAabbCollision(objects[i], objects[j]);
 

@@ -15,7 +15,7 @@ export class Vec {
 		return this;
 	}
 
-	setX (y) {
+	setY (y) {
 		this.y = y;
 		return this;
 	}
@@ -42,12 +42,12 @@ export class Vec {
 		return this;
 	}
 
-	substract (x) {
+	subtractX (x) {
 		this.x -= x;
 		return this;
 	}
 
-	susbtract (y) {
+	subtractY (y) {
 		this.y -= y;
 		return this;
 	}
@@ -103,7 +103,7 @@ export class Vec {
 
 	drawPoint(ctx, strokeColor) {
 		ctx.beginPath();
-        ctx.arc(this.x, this.y, this.y, 5, 0, Math.PI*2, true); //radius 5 
+        ctx.arc(this.x, this.y, 5, 0, Math.PI*2, true); //radius 5 
         ctx.closePath();
         ctx.strokeStyle = strokeColor;
         ctx.lineWidth = 3;
