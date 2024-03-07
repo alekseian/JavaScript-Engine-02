@@ -98,6 +98,15 @@ function updateAndDraw() {
         shapeBeingMade.draw(ctx, bordCol, null);
     }
 
+    ctx.font = "30px serif";
+    ctx.fillStyle = "red";
+    ctx.fillText("Subtract", 300, 290);
+    ctx.fillStyle = "pink";
+    ctx.fillText("Mulitply", 600, 130);
+    ctx.fillStyle = "blue";
+    ctx.fillText("Divide", 920, 50);
+    ctx.fillStyle = "green";
+    ctx.fillText("Rotate", 700, 390)
 }
 let renderInterval = setInterval(updateAndDraw, 1000 / 60);
 
@@ -137,6 +146,7 @@ switch (true) {
     default: grade = "A";
 }
 
+//addVector
 const origin = new Vec(100, 100);
 
 const vector1 = new Vec(50, 60);
@@ -151,3 +161,59 @@ const testVector = vector1.clone().add(vector2);
 testVector.renderOrigin = origin;
 
 renderer.renderedAlways.push(vector1, vector2, testVector);
+
+//subtractVector
+const  origin1 = new Vec(200, 300);
+
+const vector3 = new Vec(150, 200);
+vector3.renderOrigin = origin1;
+vector3.color = "red";
+
+const vector4 = new Vec(-150, 200);
+vector4.renderOrigin = origin1;
+vector4.color = "blue";
+
+const differenceVector = vector3.clone().subtract(vector4);
+differenceVector.renderOrigin = origin1;
+
+renderer.renderedAlways.push(vector3, vector4, differenceVector);
+
+//multiplyVector
+const origin2 = new Vec(550, 100);
+
+const vector5 = new Vec(100, 100);
+vector5.renderOrigin = origin2;
+vector5.color = "pink";
+
+const multiplyVector = vector5.clone().multiply(2);
+multiplyVector.renderOrigin = origin2;
+
+renderer.renderedAlways.push(vector5, multiplyVector);
+
+//divideVector
+const origin3 = new Vec(900, 50);
+
+const vector6 = new Vec(200, 300);
+vector6.renderOrigin = origin3;
+vector6.color = "blue";
+
+const divideVector = vector6.clone().divide(2);
+divideVector.renderOrigin = origin3;
+
+renderer.renderedAlways.push(vector6, divideVector);
+
+//rotateVector
+const origin4 = new Vec(800, 400);
+
+const vector7 = new Vec(200, 200);
+vector7.renderOrigin = origin4;
+vector7.color = "green";
+
+const rotateVector = vector7.clone().rotate(90);
+rotateVector.renderOrigin = origin4;
+
+renderer.renderedAlways.push(vector7, rotateVector);
+
+
+
+
