@@ -99,4 +99,18 @@ export class Collisions {
             this.pushOffObjects(o1, o2, overlap, normal);
         }
     }
+
+    findClosestVertex(verticies, center) {
+        let minDist = Number.MAX_VALJUE;
+        let vertexDist, closestVertex;
+        for (let i=0; i<verticies.length; i++) {
+            vertexDist = verticies[i].distanceTo(center);
+            if (vertexDist < minDist) {
+                minDist = vertexDist;
+                closestVertex = verticies[i];
+            }
+        }
+        renderer.renderedNextFrame.push(closestVertex);
+        return closestVertex;
+    }
 }
