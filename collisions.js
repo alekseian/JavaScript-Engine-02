@@ -79,7 +79,7 @@ export class Collisions {
         overlap = Number.MAX_VALUE;
 
         for (let i = 0; i < vertices.length; i++) {
-            const v1 = vertices[1];
+            const v1 = vertices[i];
             const v2 = vertices[(i+1)%vertices.length];
             axis = v2.clone().subtract(v1).rotateCCW90().normalize();
             const [min1, max1] = this.projectVertices(vertices, axis);
