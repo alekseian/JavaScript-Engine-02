@@ -32,11 +32,11 @@ export class Collisions {
                     }   //later detect rectangle rectangle here
                     else if (objects[i].shape instanceof Circle && 
                         objects[j].shape instanceof Rect) {
-                            this.findClosestVertex(objects[j].shape.vertices, objects[i].shape.position);
+                            this.detectCollisionCirclePolygon(objects[i], objects[j]);
                     }
                     else if (objects[i].shape instanceof Rect && 
                         objects[j].shape instanceof Circle) {
-                            this.findClosestVertex(objects[i].shape.vertices, objects[j].shape.position);
+                            this.detectCollisionCirclePolygon(objects[j], objects[i]);
                     }
                 }
             }
@@ -79,12 +79,11 @@ export class Collisions {
         overlap = Number.MAX_VALUE;
 
         for (let i = 0; i < vertices.length; i++) {
-            const v1 = vertices[i];
+            const v1 = vertices[1];
             const v2 = vertices[(i+1)%vertices.length];
             axis = v2.clone().subtract(v1).rotateCCW90().normalize();
             const [min1, max1] = this.projectVertices(vertices, axis);
-            const [min2, max2] = this.projectCircle(center, radius, axis);
-            
+            const [min2, max2] = this.projectCircle(cShape.position, cShape.radius, axis);
             if (min2 >= max1 || min1 >= max2){
                 //we dont have collision
                 return;
@@ -93,18 +92,52 @@ export class Collisions {
             const axisOverlap = Math.min(max2-min1, max1-min2); //finds smallest overlap
             if (overlap >= axisOverlap) {
                 overlap = axisOverlap;
+                normal = axis;
             }
         }
+
+        const closestVertex = this.findClosestVertex(vertices, cShape.position);
+        axis = closestVertex.clone().subtract(cShape.position).normalize();
+
+        const [min1, max1] = this.projectVertices(vertices, axis);
+        const [min2, max2] = this.projectCircle(cShape.position, cShape.radius, axis);
+        console.log(1);
+        if (min2 >= max1 || min1 >= max2){
+            //we dont have collision
+            return;
+        }
+
+        const axisOverlap = Math.min(max2-min1, max1-min2);
+
+        if (overlap >= axisOverlap) {
+            overlap = axisOverlap;
+            normal = axis;
+        }
+
+        const vec1to2 = p.shape.position.clone().subtract(c.shape.position);
+        if (normal.dot(vec1to2) < 0) { 
+            normal.invert(); 
+        }
+
+        console.log(1);
+        this.collisions.push({
+            collidedPair: [c, p],
+            overlap: overlap,
+            normal: normal
+        });
+
+        
+
     }
 
     projectVertices (vertices, axis) {
         let min, max;
-        min = vertices[0].dot(axis);    //first vertex projection
-        max = min;  //save it as both min and max
-
-        for (let i = 1; i < vertices.length; i++) {
-            const proj = vertices[i].dot(axis); //projections for all other vertices
-            if (proj < min) {
+        min = vertices[0].dot(axis);   //first vertex ptojection 
+        max = min; //save it as both and max
+        
+        for (let i = 1; i < vertices.length; i++){
+            const proj = vertices[i].dot(axis);  //projections for all other vertices
+             if(proj < min) {
                 min = proj;
             }
             if (proj > max) {
@@ -112,24 +145,23 @@ export class Collisions {
             }
         }
 
-        return [min, max];  //smallest and largest projection
+        return [min, max]; //smallest and largest projection 
     }
 
     projectCircle (center, radius, axis) {
         let min, max;
-        //points on circle distance 1 radius from center
+        //points on circle distance 1 radius from center 
         const points = [center.clone().moveDistInDir(radius, axis), center.clone().moveDistInDir(-radius, axis)];
-        
-        min = points[0].dot(axis);  //project points
+        min = points[0].dot(axis); //project points 
         max = points[1].dot(axis);
-        
-        if (min > max) {    //swap min and max if we chose wrong
+
+        if (min > max) {   //swap min and max if we chose worng 
             const t = min;
             min = max;
             max = t;
         }
-
         return [min, max];
+
     }
 
     findClosestVertex (vertices, center) {  //returns the i of the closest of vertices to a center point
@@ -159,4 +191,8 @@ export class Collisions {
             this.pushOffObjects(o1, o2, overlap, normal);
         }
     }
+
+    
+
+
 }
