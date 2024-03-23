@@ -124,3 +124,15 @@ function addObject(shape) {
     const object = new RigidBody(shape);  
     objects.push(object);
 } 
+let a  = 10;
+let b = 0;
+let c = a / b;
+let d = "one"; //string 
+let e = a / d;
+if (e != 5) {
+    // debugger;
+}
+console.log(c);
+console.log(e);
+console.warn(e);
+console.error(c);
