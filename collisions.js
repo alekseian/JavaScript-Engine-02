@@ -195,11 +195,12 @@ export class Collisions {
         const edges1 = this.calculateEdges(vertices1);
         const axes1 = [];
         for (let i = 0; i < edges1.length; i++) {
-            axes1.push(edges1.rotateCCW90().normalize());
+            axes1.push(edges1[i].rotateCCW90().normalize());
         }
         //check if axes are not on the back side of rectangle
         for (let i = 0; i < axes1.length; i++) {
-            if(axes1[i].dot(vector1to2) < 0) {
+            axis = axes1[i];
+            if(axis.dot(vector1to2) < 0) {
                 //axis is in the wrong direction, i.e it is on the backside of rectangle
                 continue;
             }
@@ -221,7 +222,7 @@ export class Collisions {
         for (let i = 0; i < edges2.length; i++) {
             axes2.push(edges2[i].rotateCCW90().normalize());
         }
-        for (let i = 0; i , axes2,lenth; i++) {
+        for (let i = 0; i , axes2.length; i++) {
             const axis = axes2[i];
             if(axis.dot(vector2to1) < 0) {
                 continue;
