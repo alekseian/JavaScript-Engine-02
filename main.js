@@ -25,14 +25,18 @@ inp.resizeCanvas();
 inp.addListeners();
 
 const objects = [];
-<<<<<<< HEAD
+// <<<<<<< HEAD
+// <<<<<<< HEAD
 addObject(
     new Rect (
         new Vec (canv.width / 2, canv.height),
         3*canv.width,
         canv.height*1
     )
-=======
+)
+// =======
+// =======
+// >>>>>>> 3fc7480a01476b78f3b01055ca62c1d3ea8421c9
 //ground object
 addObject(
     new Rect (
@@ -41,7 +45,10 @@ addObject(
         canv.height*0.6
     ),
     true    //it is fixed
->>>>>>> 3fc7480a01476b78f3b01055ca62c1d3ea8421c9
+// <<<<<<< HEAD
+// >>>>>>> 3fc7480a01476b78f3b01055ca62c1d3ea8421c9
+// =======
+// >>>>>>> 3fc7480a01476b78f3b01055ca62c1d3ea8421c9
 );
 
 let shapeBeingMade = null;
