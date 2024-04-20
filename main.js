@@ -29,19 +29,10 @@ const objects = [];
 addObject(
     new Rect (
         new Vec (canv.width / 2, canv.height),
-        3*canv.width,
-        canv.height*1
-    )
-)
-
-addObject(
-    new Rect (
-        new Vec (canv.width / 2, canv.height),
         3*canv.width, 
         canv.height*0.6
     ),
     true    //it is fixed
-
 );
 
 let shapeBeingMade = null;
