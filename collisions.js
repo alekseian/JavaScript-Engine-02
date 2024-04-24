@@ -131,6 +131,9 @@ export class Collisions {
             normal.invert();
         }
 
+        const point = this.findContactPointCirclePolygon(cShape.position, vertices);
+        renderer.renderedNextFrame.push(point);
+
         //add collision info
         this.collisions.push({
             collidedPair: [c, p],
@@ -350,6 +353,21 @@ export class Collisions {
 
     resolveCollisionsWithRotation() {
 
+    }
+
+    findContactPointCirclePolygon(circleCenter, polygonVertices) {
+        let contact, v1, v2;
+        let shortestDistance = Number.MAX_VALUE;
+        for(let i=0; i<polygonVertices.length; i++) {
+            v1 = polygonVertices[i];
+            v2 = polygonVertices[(i+1)%polygonVertices,length];
+            const info = this.findClosestPointSegment(circleCenter, v1, v2);
+            if (info[1] < shortestDistance) {
+                contact = info[0];
+                shortestDistance = info[1];
+            }
+        }
+        return contact;
     }
 
 
