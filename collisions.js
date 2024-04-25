@@ -303,7 +303,7 @@ export class Collisions {
         } else {
             closest = a.clone().add(vAB.multiply(d));
         }
-        renderer.renderedNextFrame.push(closest);
+        //renderer.renderedNextFrame.push(closest);
         return [closest, p.distanceToSq(closest)];
     }
 
