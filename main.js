@@ -14,8 +14,9 @@ const canv = document.getElementById("canvas");
 const ctx = canv.getContext("2d");
 
 export const renderer = new Renderer(canv, ctx);
-const fillCol = "darkGray";
-const bordCol = "black";
+let fillCol = "darkGray";
+let bordCol = "black";
+let backroundCol = "white";
 
 const col = new Collisions();
 
@@ -40,6 +41,7 @@ let shapeBeingMade = null;
 let shapeSelected = 'r';
 let gravitySelected = 2;
 let colMode = 2;
+let colorSelected = "black";
 
 //button variables
 const circleButton = document.getElementById("c");
@@ -60,9 +62,21 @@ const selectCollisions = document.getElementById("collisions");
 selectCollisions.addEventListener("change", function () {
     colMode = selectCollisions.value;
 });
+const selectColors = document.getElementById("colors");
+selectColors.addEventListener("change", function () {
+    colorSelected = selectColors.value;
+});
+const selectColorType = document.getElementById("color type");
+
 
 //MAIN LOOP
 function updateAndDraw() {
+    switch (selectColorType.value) {
+        case "fill": fillCol = colorSelected; break;
+        case "border": bordCol = colorSelected; break;
+        case "backround": backroundCol = colorSelected; break;
+    }
+
 
     //make objects
     if (inp.inputs.lclick && shapeBeingMade == null) {

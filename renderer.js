@@ -8,6 +8,7 @@ export class Renderer {
         this.renderedAlways = [];
         this.renderedNextFrame = [];
         this.texts = [];
+        
     }
     
     drawText(textObject) {
@@ -37,6 +38,11 @@ export class Renderer {
 
     clearFrame() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.fillStyle = 
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    
+
+
     }
 
     
