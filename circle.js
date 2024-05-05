@@ -24,24 +24,33 @@ export class Circle {
         return inertia;
     }
 
-	draw(ctx, strokeColor, fillColor) {
-        ctx.beginPath();
+	draw(ctx, fillColor, strokeColor) {
+        ctx.save();
+        ctx.beginPath();  
         ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI*2, true);
-        ctx.closePath();
+        ctx.closePath(); 
+    
         if (fillColor) {
             ctx.fillStyle = fillColor;
             ctx.fill();
         }
-        ctx.strokeStyle = strokeColor;
-        ctx.lineWidth = 3;
-        ctx.stroke();
-
+    
+        if (strokeColor) {
+            ctx.strokeStyle = strokeColor;
+            ctx.lineWidth = 3;
+            ctx.stroke();
+        }
+    
+       
+        ctx.beginPath();
         ctx.moveTo(this.position.x, this.position.y);
         ctx.lineTo(
             this.position.x + this.radius * Math.cos(this.orientation),
             this.position.y + this.radius * Math.sin(this.orientation),
         );
         ctx.stroke();
-
+        ctx.closePath();  
+        ctx.restore();
     }
+    
 }	

@@ -14,9 +14,10 @@ const canv = document.getElementById("canvas");
 const ctx = canv.getContext("2d");
 
 export const renderer = new Renderer(canv, ctx);
-let fillCol = "darkGray";
-let bordCol = "black";
+let fillCol = "black";
+let bordCol = "white";
 let backroundCol = "white";
+
 
 const col = new Collisions();
 
@@ -41,7 +42,7 @@ let shapeBeingMade = null;
 let shapeSelected = 'r';
 let gravitySelected = 2;
 let colMode = 2;
-let colorSelected = "black";
+
 
 //button variables
 const circleButton = document.getElementById("c");
@@ -62,22 +63,48 @@ const selectCollisions = document.getElementById("collisions");
 selectCollisions.addEventListener("change", function () {
     colMode = selectCollisions.value;
 });
-const selectColors = document.getElementById("colors");
-selectColors.addEventListener("change", function () {
-    colorSelected = selectColors.value;
-});
-const selectColorType = document.getElementById("color type");
 
+
+document.getElementById('colors').addEventListener("change", function () {
+    
+    updateColors();
+});
+
+document.getElementById('color-type').addEventListener("change", function () {
+    updateColors();
+});
+function updateColors() {
+    const colorSelected = document.getElementById("colors").value;
+    const colorTypeSelected = document.getElementById("color-type").value;
+
+    switch (colorTypeSelected) {
+        case "fill": 
+            fillCol = colorSelected; 
+            break;
+        case "border":
+             bordCol = colorSelected; 
+             break;
+        case "backround": 
+        backroundCol = colorSelected;
+        canv.style.backgroundColor = backroundCol; 
+            break;
+    }
+}
 
 //MAIN LOOP
 function updateAndDraw() {
-    switch (selectColorType.value) {
-        case "fill": fillCol = colorSelected; break;
-        case "border": bordCol = colorSelected; break;
-        case "backround": backroundCol = colorSelected; break;
+    
+   ctx.clearRect(0, 0, canv.width, canv.height);
+   ctx.fillStyle = backroundCol;
+    ctx.fillRect(0, 0, canv.width, canv.height);
+
+  
+    for(let i=0; i<objects.length; i++) {
+        objects[i].shape.draw(ctx, fillCol, bordCol);
     }
 
-
+    
+ 
     //make objects
     if (inp.inputs.lclick && shapeBeingMade == null) {
         //lesson 03 - make rectangles with mouse
@@ -133,7 +160,7 @@ function updateAndDraw() {
         objects[i].acceleration.zero();
         objects[i].acceleration.y += g;
     }
-
+   
     // console.time('collisions');
     //improve precision
     const iterations = 20;
@@ -142,6 +169,7 @@ function updateAndDraw() {
 
         for(let i=0; i<objects.length; i++) {
             objects[i].updateShape(dt / iterations);
+            
         }
 
         //COLLISIONS
@@ -203,9 +231,11 @@ function moveObjectWithMouse(object) {
 }
 
 function addObject(shape, fixed=false) {
-    const object = new RigidBody(shape, fixed);
-    object.setMass();  
-    objects.push(object);
+    
+        const object = new RigidBody(shape, fixed);
+        object.setMass();
+        objects.push(object);
+   
 } 
 
 function removeObjects(objectsToRemove) {
@@ -217,4 +247,3 @@ function removeObjects(objectsToRemove) {
         }
     }
 }
-
