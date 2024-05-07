@@ -20,7 +20,7 @@ export class Renderer {
     drawFrame(objects, fillCol, bordCol) {
         for (let i = 0; i<objects.length; i++) {
             const shape = objects[i].shape;
-            shape.draw(this.ctx, fillCol, bordCol);
+            shape.draw(this.ctx);
             // shape.aabb.draw(this.ctx, "red");
         }
         for (let i = 0; i<this.renderedNextFrame.length; i++) {

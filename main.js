@@ -15,8 +15,10 @@ const ctx = canv.getContext("2d");
 
 export const renderer = new Renderer(canv, ctx);
 let fillCol = "black";
-let bordCol = "white";
+let bordCol = "Grey";
 let backroundCol = "white";
+let groundObj = "black";
+
 
 
 const col = new Collisions();
@@ -32,7 +34,9 @@ addObject(
     new Rect (
         new Vec (canv.width / 2, canv.height),
         3*canv.width, 
-        canv.height*0.7
+        canv.height*0.7,
+        fillCol,
+        bordCol
     ),
     true    //it is fixed
 );
@@ -65,6 +69,7 @@ selectCollisions.addEventListener("change", function () {
 });
 
 
+
 document.getElementById('colors').addEventListener("change", function () {
     
     updateColors();
@@ -82,8 +87,11 @@ function updateColors() {
             fillCol = colorSelected; 
             break;
         case "border":
-             bordCol = colorSelected; 
-             break;
+            bordCol = colorSelected; 
+            break;
+        case "groundObj":
+            objects[0].shape.fillCol = colorSelected;
+            break;
         case "backround": 
         backroundCol = colorSelected;
         canv.style.backgroundColor = backroundCol; 
@@ -109,9 +117,9 @@ function updateAndDraw() {
     if (inp.inputs.lclick && shapeBeingMade == null) {
         //lesson 03 - make rectangles with mouse
         if (shapeSelected == 'c') {
-            shapeBeingMade = new Circle(inp.inputs.mouse.position.clone(), SMALLEST_RADIUS, 0);
+            shapeBeingMade = new Circle(inp.inputs.mouse.position.clone(), SMALLEST_RADIUS, fillCol, bordCol);
         } else if (shapeSelected == 'r') {
-            shapeBeingMade = new Rect(inp.inputs.mouse.position.clone(), SMALLEST_RADIUS*2, SMALLEST_RADIUS*2);
+            shapeBeingMade = new Rect(inp.inputs.mouse.position.clone(), SMALLEST_RADIUS*2, SMALLEST_RADIUS*2, fillCol, bordCol);
         }
         
     }
