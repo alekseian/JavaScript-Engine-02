@@ -217,6 +217,7 @@ function updateAndDraw() {
     }
 
 }
+//do a promise and load images, then call promise.then{interval}
 let renderInterval = setInterval(updateAndDraw, 1000 / 60);
 
 function findClosestObject(objects, vector) {
