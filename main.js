@@ -118,6 +118,8 @@ function updateAndDraw() {
         //lesson 03 - make rectangles with mouse
         if (shapeSelected == 'c') {
             shapeBeingMade = new Circle(inp.inputs.mouse.position.clone(), SMALLEST_RADIUS, fillCol, bordCol);
+            //set image for circle
+            shapeBeingMade.image = circleImg;
         } else if (shapeSelected == 'r') {
             shapeBeingMade = new Rect(inp.inputs.mouse.position.clone(), SMALLEST_RADIUS*2, SMALLEST_RADIUS*2, fillCol, bordCol);
         }
@@ -218,8 +220,16 @@ function updateAndDraw() {
 
 }
 //do a promise and load images, then call promise.then{interval}
-let renderInterval = setInterval(updateAndDraw, 1000 / 60);
 
+const circleImg = new Image();
+        circleImg.src = 'BasketballOrange.svg';
+        
+Promise.all([
+    new Promise((resolve) => { circleImg.onload = resolve; }),
+    
+]).then(() => {
+let renderInterval = setInterval(updateAndDraw, 1000 / 60);
+});
 function findClosestObject(objects, vector) {
     let closestObject = null;
     let distance;
