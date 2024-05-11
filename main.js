@@ -17,7 +17,11 @@ export const renderer = new Renderer(canv, ctx);
 let fillCol = "black";
 let bordCol = "Grey";
 let backroundCol = "white";
-let groundObj = "black";
+let basketballBlack = "BasketballBlack.svg";
+let basketballOrange = "BasketballOrange.svg";
+let football = "football.svg";
+let tennisball = "Tennisball.svg";
+
 
 
 
@@ -46,6 +50,9 @@ let shapeBeingMade = null;
 let shapeSelected = 'r';
 let gravitySelected = 2;
 let colMode = 2;
+let imageSelected = "basketballBlack";
+
+
 
 
 //button variables
@@ -67,6 +74,31 @@ const selectCollisions = document.getElementById("collisions");
 selectCollisions.addEventListener("change", function () {
     colMode = selectCollisions.value;
 });
+ 
+document.getElementById('Images').addEventListener("change", function () {
+    
+    updateImage();
+});
+
+function updateImage() {
+    const imageSelected = document.getElementById("Images").value;
+    switch (imageSelected) {
+        case "basketballBlack":
+            circleImg.src = basketballBlack;
+            break;
+        case "basketballOrange":
+            circleImg.src = basketballOrange;
+            break;
+        case "football":
+            circleImg.src = football;
+            break;
+        case "tennisball":
+            circleImg.src = tennisball;
+            break;
+s
+    }
+}
+
 
 
 
@@ -93,8 +125,8 @@ function updateColors() {
             objects[0].shape.fillCol = colorSelected;
             break;
         case "backround": 
-        backroundCol = colorSelected;
-        canv.style.backgroundColor = backroundCol; 
+            backroundCol = colorSelected;
+            canv.style.backgroundColor = backroundCol; 
             break;
     }
 }
@@ -118,8 +150,12 @@ function updateAndDraw() {
         //lesson 03 - make rectangles with mouse
         if (shapeSelected == 'c') {
             shapeBeingMade = new Circle(inp.inputs.mouse.position.clone(), SMALLEST_RADIUS, fillCol, bordCol);
+
             //set image for circle
+        if (imageSelected) {
             shapeBeingMade.image = circleImg;
+        }    
+
         } else if (shapeSelected == 'r') {
             shapeBeingMade = new Rect(inp.inputs.mouse.position.clone(), SMALLEST_RADIUS*2, SMALLEST_RADIUS*2, fillCol, bordCol);
         }
@@ -221,15 +257,16 @@ function updateAndDraw() {
 }
 //do a promise and load images, then call promise.then{interval}
 
-const circleImg = new Image();
-        circleImg.src = 'BasketballOrange.svg';
-        
+let circleImg = new Image();
+circleImg.src = basketballBlack; // Default to BasketballBlack.svg
+
 Promise.all([
     new Promise((resolve) => { circleImg.onload = resolve; }),
     
 ]).then(() => {
-let renderInterval = setInterval(updateAndDraw, 1000 / 60);
+    let renderInterval = setInterval(updateAndDraw, 1000 / 60);
 });
+
 function findClosestObject(objects, vector) {
     let closestObject = null;
     let distance;
