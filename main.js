@@ -17,10 +17,13 @@ export const renderer = new Renderer(canv, ctx);
 let fillCol = "black";
 let bordCol = "Grey";
 let backroundCol = "white";
-let basketballBlack = "BasketballBlack.svg";
-let basketballOrange = "BasketballOrange.svg";
+let basketball = "Basketball.svg";
 let football = "football.svg";
 let tennisball = "Tennisball.svg";
+let baseball = "Baseball.svg";
+let volleyball = "Volleyball.svg";
+let smile = "Smile.svg"
+let pizza = "Pizza.svg"
 
 
 
@@ -50,7 +53,15 @@ let shapeBeingMade = null;
 let shapeSelected = 'r';
 let gravitySelected = 2;
 let colMode = 2;
-let imageSelected = "basketballBlack";
+let imageSelected = basketball;
+
+// const iButton = document.getElementById("i");
+// const iSelected = document.getElementById("Images");
+
+
+// iButton.addEventListener("click", function() {
+//    iSelected.style.display = iSelected.style.display === "block" ? "none" : "block";
+//   });
 
 
 
@@ -58,6 +69,10 @@ let imageSelected = "basketballBlack";
 //button variables
 const circleButton = document.getElementById("c");
 const rectButton = document.getElementById("r");
+const imageButton = document.getElementById("i");
+imageButton.onclick = function() {
+    shapeSelected = 'i';
+};
 circleButton.onclick = function() {
     shapeSelected = 'c';
 };
@@ -81,19 +96,28 @@ document.getElementById('Images').addEventListener("change", function () {
 });
 
 function updateImage() {
-    const imageSelected = document.getElementById("Images").value;
+     imageSelected = document.getElementById("Images").value;
     switch (imageSelected) {
-        case "basketballBlack":
-            circleImg.src = basketballBlack;
+        case "smile":
+            imageSelected = smile;
             break;
-        case "basketballOrange":
-            circleImg.src = basketballOrange;
+        case "basketbal":
+            imageSelected = basketball;
             break;
         case "football":
-            circleImg.src = football;
+            imageSelected = football;
             break;
         case "tennisball":
-            circleImg.src = tennisball;
+            imageSelected = tennisball;
+            break;
+        case "baseball":
+            imageSelected = baseball;
+            break;
+        case "volleyball":
+            imageSelected = volleyball;
+            break;
+        case "pizza":
+            imageSelected = pizza;
             break;
 s
     }
@@ -150,11 +174,16 @@ function updateAndDraw() {
         //lesson 03 - make rectangles with mouse
         if (shapeSelected == 'c') {
             shapeBeingMade = new Circle(inp.inputs.mouse.position.clone(), SMALLEST_RADIUS, fillCol, bordCol);
+        }
+        else if (shapeSelected == 'i') {
+            shapeBeingMade = new Circle(inp.inputs.mouse.position.clone(), SMALLEST_RADIUS, fillCol, bordCol);
 
-            //set image for circle
-        if (imageSelected) {
+            //if we are in circle mode we want to create an image object and assign 
+            //it to currently selected image
+
+         let circleImg = new Image();
+            circleImg.src = imageSelected;
             shapeBeingMade.image = circleImg;
-        }    
 
         } else if (shapeSelected == 'r') {
             shapeBeingMade = new Rect(inp.inputs.mouse.position.clone(), SMALLEST_RADIUS*2, SMALLEST_RADIUS*2, fillCol, bordCol);
@@ -255,13 +284,15 @@ function updateAndDraw() {
     }
 
 }
-//do a promise and load images, then call promise.then{interval}
+// //do a promise and load images, then call promise.then{interval}
 
 let circleImg = new Image();
-circleImg.src = basketballBlack; // Default to BasketballBlack.svg
+
+circleImg.src = basketball; // Default to BasketballBlack.svg
+
 
 Promise.all([
-    new Promise((resolve) => { circleImg.onload = resolve; }),
+ new Promise((resolve) => { circleImg.onload = resolve; }),
     
 ]).then(() => {
     let renderInterval = setInterval(updateAndDraw, 1000 / 60);
